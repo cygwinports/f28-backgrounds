@@ -1,0 +1,49 @@
+NAME="f28-backgrounds"
+VERSION=28.1.0
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="Fedora 28 desktop wallpaper"
+DESCRIPTION="Default wallpaper for the Fedora 28 release, along with a
+collection of selected wallpapers contributed by the Fedora community."
+HOMEPAGE="https://fedoraproject.org/wiki/Design"
+SRC_URI="https://github.com/fedoradesign/backgrounds/releases/download/v${VERSION}/${NAME}-${VERSION}.tar.xz"
+SRC_DIR=${NAME}
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-extras" # ${NAME}-animated"
+f28_backgrounds_DOCS="Attribution CC-BY-SA-4.0"
+f28_backgrounds_CONTENTS="
+	usr/share/backgrounds/f28/default/
+	usr/share/backgrounds/xfce/f28.png
+	usr/share/gnome-background-properties/f28.xml
+	usr/share/mate-background-properties/f28.xml
+	usr/share/wallpapers/F28/
+"
+f28_backgrounds_animated_SUMMARY="Fedora 28 animated wallpapers"
+f28_backgrounds_animated_DOCS="Attribution CC-BY-SA-4.0"
+f28_backgrounds_animated_CONTENTS="
+	usr/share/backgrounds/f28/default-animated/
+	usr/share/gnome-background-properties/f28-animated.xml
+	usr/share/mate-background-properties/f28-animated.xml
+"
+f28_backgrounds_extras_SUMMARY="Fedora 28 extra wallpapers"
+f28_backgrounds_extras_DOCS="Attribution-Extras CC-BY-SA-4.0"
+f28_backgrounds_extras_CONTENTS="
+	usr/share/backgrounds/f28/extras/
+	usr/share/backgrounds/xfce/f28-*
+	usr/share/gnome-background-properties/f28-extras.xml
+	usr/share/mate-background-properties/f28-extras.xml
+	usr/share/wallpapers/F28_*/
+"
+
+src_compile() {
+	cd ${S}
+	cygmake
+}
+
+src_install() {
+	cd ${S}
+	cyginstall
+	mv ${D}/usr/share/{xfce4/backdrops,backgrounds/xfce}
+}
